@@ -21,6 +21,10 @@ $input_string = <STDIN>;
 # Разбиваем ввод на переменные по пробелу.
 my ($first_arg, $second_arg, $third_arg) = split' ', $input_string;
 
+# If the first character is the number of execution algebra.
+# Otherwise, perform trigonometry.
+# Если первый символ число выполняем алгебру.
+# Иначе выполняем тригонометрию.
 if ($input_string =~ m/^(\d)/) {
      algebra($first_arg, $second_arg, $third_arg);
      } else {
