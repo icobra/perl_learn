@@ -19,11 +19,7 @@ $input_string = <STDIN>;
 
 # Use split to split the lines by space symbols.
 # Разбиваем ввод на переменные по пробелу.
-my @fields = split / /, $input_string;
-
-my $first_arg = $fields[0];
-my $second_arg = $fields[1];
-my $third_arg = $fields[2];
+my ($first_arg, $second_arg, $third_arg) = split' ', $input_string;
 
 if ($input_string =~ m/^(\d)/) {
      algebra($first_arg, $second_arg, $third_arg);
@@ -71,19 +67,17 @@ sub trigonometry
     {
     if ($first_arg eq "sin")
         {
-        say sin "$second_arg";
-        say "sin rad.";
+        say "sin $second_arg = ", sin "$second_arg", " rad";
         }
      elsif ($first_arg eq "cos")
          {
-         say cos "$second_arg";
-         say "cos rad.";
+         say "cos $second_arg = ", cos "$second_arg" , " rad";
          }
      elsif ($first_arg eq "tan")
          {
          my $sin_second = sin $second_arg;
          my $cos_second = cos $second_arg;
-         say "$sin_second" / "$cos_second";
+         say "tan $second_arg = ", "$sin_second" / "$cos_second", " rad";
          }
      else
         {
