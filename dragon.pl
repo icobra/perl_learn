@@ -4,19 +4,27 @@ use warnings;
 use strict;
 
 sub DispalyIntro{
-    say "    Вы находитесь в земле, полной драконов. Вы видите
-    две пещеры. В одной пещере дракон дружелюбен
-    и поделится с вами своим сокровищем. Другой дракон
-    жаден и голоден, и съест вас сразу.";
+    my $introMessage = <<"END" ;
+Вы находитесь в земле, полной драконов. Вы видите
+две пещеры. В одной пещере дракон дружелюбен
+и поделится с вами своим сокровищем. Другой дракон
+жаден и голоден, и съест вас сразу.
+...
+END
+    print $introMessage;
 }
 
+my $cave = 0;
+
 sub ChooseCave{
-    my $cave = 0;
     while ($cave != 1 and $cave != 2){
-        say" В какую пещеру пойдем? 1 или 2?";
+        say "В какую пещеру пойдем? 1 или 2?";
         chomp($cave=<STDIN>);
     }
-    
+    return $cave
+}
+
+sub ChekCave{
     say "Подходим к пещере...";
     sleep(2);
     say "Темно и жутко...";
@@ -37,7 +45,8 @@ sub ChooseCave{
 my $PlayAgain = "yes";
 while ($PlayAgain eq "yes" or $PlayAgain eq "y"){
     DispalyIntro;
-    ChooseCave;
+    $cave = ChooseCave();
+    ChekCave($cave);
 
     say "Хотите играть снова yes или no?";
     chomp($PlayAgain=<STDIN>);
