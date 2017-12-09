@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 use v5.20;
 use warnings;
-use strict;
 
 sub DispalyIntro{
     my $introMessage = <<"END" ;
