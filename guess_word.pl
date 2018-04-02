@@ -4,7 +4,7 @@ use v5.22;
 =head
 Игра угадай слова
 
-Версия 0.5
+Версия 0.8
 =cut
 
 sub HelloPlayer{
@@ -17,6 +17,7 @@ END
 }
 
 sub HangMan{
+	my ($try) = @_ ;
     my @HangMan;
 
 	$HangMan[0] = "+-----+\n|\n|\n|\n|\n|\n|\n======\n";
@@ -29,7 +30,7 @@ sub HangMan{
         "======\n";
     $HangMan[5] = "+-----+\n|     |\n|     0\n|    /|\\\n|     |\n" .
         "|    / \\\n|\n======\n";
-    print @HangMan;	
+    print @HangMan[$try];	
 }
 
 sub WordsForGame {
@@ -54,84 +55,86 @@ sub WordsForGame {
 
 sub CheckChar{
 	my ($long, $secreet_word, $word, $symbol) = @_ ;
-
-=head	
-	$long = @_[0];
-	$secreet_word = @_[1];
-	$word = @_[2];
-	$symbol = @_[3];
-=cut 
     my $start = 0;
+    my $try = 0;
 	while ($long > 0){
-	    if (substr(@_[2], $start, 1) eq @_[3]){
-            substr(@_[1], $start, 1) = @_[3];
+	    if (substr($word, $start, 1) eq $symbol){
+            substr($secreet_word, $start, 1) = $symbol;
+            $try++;
         }
         else{
-	        say "no";
+            # enter your code;    
         }
         $long--;
         $start++;
     }
-    return @_[1],@_[2];
+    if ($try > 0){
+    	$try = 0;
+    }
+    else{
+    	$try = 1;
+    }
+
+    return $secreet_word, $try;
 }
 
 sub FullWord{
-	my ($count, $ord) = @_ ;
-	my $start = 0;
-	my $star = '*';
+	my ($secreet_word, $word) = @_ ;
 	my $StatusOfGame = 0;
-	while($count > 0){
-	    if (substr($ord, $start, 1) eq $star){
-            return $StatusOfGame = 1;
-        }
-        else{
-	        say "no";
-        }
-		$count--;
-        $start++;
+    if ($secreet_word eq $word){
+        return $StatusOfGame = 0;
     }
-    return $StatusOfGame = 0;
+    else{
+	    return $StatusOfGame = 1;
+    }
 }
 
-my $word = WordsForGame;
-my $secreet_word = "";
-my $start = 0;
-my $len = length($word);
-my $long = $len;
+sub MakeSecreetWord{
+    my ($len, $word) = @_ ;
+    my $start = 0;
+    my $long = $len;
+    my $secreet_word = "";
 
-while ($long > 0){
-	$secreet_word = $secreet_word . "*";
-	$long--;
+    while ($long > 0){
+	    $secreet_word = $secreet_word . "*";
+	    $long--;
+    }
+    return $secreet_word;
 }
-$long = $len;
-
-my $symbol="";
-
-say "Мы еще не в игре";
-say $word; say $secreet_word;
-
-WordsForGame;
 
 my $PlayAgain = "yes";
 while ($PlayAgain eq "yes" or $PlayAgain eq "y"){
     HelloPlayer;
-    
-    my $temp;
-    my $temp1;
+    my $word = WordsForGame;
+    my $len = length($word);
+    my $secreet_word = MakeSecreetWord($len, $word);
+    #прооверить где используется
+    my $long = $len;
+    my $try = 0;
+    my $next_try = 0;
+
+    my $symbol="";
     say $secreet_word;
     say "Мы в основном цикле игры";
     my $StatusOfGame = 1;
     while ($StatusOfGame > 0) {
+    	HangMan($try);
     	say "Введите маленькую букву из этого слова на английском";
         chomp($symbol=<STDIN>);
-        my ($temp, $temp1) = CheckChar($long, $secreet_word, $word, $symbol);
-        $secreet_word = $temp;
-        $word = $temp1;
-        say "Искомое слово";
+        ($secreet_word, $next_try) = CheckChar($len, $secreet_word, $word, $symbol);
+        $try = $try + $next_try;
+        say $try;
+        if ($try == 5){
+        	HangMan($try);
+        	say "Game Over";
+        	last;
+        }
+        say "пороверка";
         say $secreet_word;
-       $StatusOfGame = FullWord($long, $temp);
+        say $word;
+        say "проверка";
+        $StatusOfGame = FullWord($secreet_word, $word);
     }
-
 
     say "Хотите играть yes или no?";
     chomp($PlayAgain=<STDIN>);
