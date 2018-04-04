@@ -10,18 +10,18 @@ use v5.22;
 sub HangMan{
 	# Draw HangMan / Рисует человечка
 	my ($try) = @_ ;
-    my @HangMan;
+        my @HangMan;
 	$HangMan[0] = "+-----+\n|\n|\n|\n|\n|\n|\n======\n";
 	$HangMan[1] = "+-----+\n|     |\n|\n|\n|\n|\n|\n======\n";
 	$HangMan[2] = "+-----+\n|     |\n|     0\n|\n|\n|\n======\n";
-    $HangMan[3] = "+-----+\n|     |\n|     0\n|    /|\\\n|\n|\n======\n";
-    # Use "."" to connatation string and use 80 char on string format
-    # Используем "." для объединения строк и соблюдения 80 символов в строку
-    $HangMan[4] = "+-----+\n|     |\n|     0\n|    /|\\\n|     |\n|\n" .
-        "======\n";
-    $HangMan[5] = "+-----+\n|     |\n|     0\n|    /|\\\n|     |\n" .
-        "|    / \\\n|\n======\n";
-    print @HangMan[$try];	
+	$HangMan[3] = "+-----+\n|     |\n|     0\n|    /|\\\n|\n|\n======\n";
+        # Use "."" to connatation string and use 80 char on string format
+        # Используем "." для объединения строк и соблюдения 80 символов в строку
+        $HangMan[4] = "+-----+\n|     |\n|     0\n|    /|\\\n|     |\n|\n" .
+            "======\n";
+        $HangMan[5] = "+-----+\n|     |\n|     0\n|    /|\\\n|     |\n" .
+            "|    / \\\n|\n======\n";
+        print @HangMan[$try];	
 }
 
 sub WordsForGame {
